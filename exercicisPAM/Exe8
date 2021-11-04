@@ -65,6 +65,12 @@ systemctl start nfs-utils
 	path="/usr/share/doc" 
 	mountpoint="~/mydoc"/>
 
+
+en el docker 
+
+service rpcbind restart
+
+service nfs-common start
 ---------------------------------------------------------------------------------------
 
 # UTILITZAR pam_mount
