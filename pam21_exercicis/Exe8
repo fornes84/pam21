@@ -19,33 +19,53 @@ Necessitem instal·lar els paquets:
 corresponent a un ramdisk tmpfs.
 
 
+
 	vim /etc/security/pam_mount.conf.xml
 
-#tmpfs:
-<volume user="test" fstype="tmpfs" mountpoint="/home/test"
-options="size=100M,uid=%(USER),mode=0700" />
+#EXEMPLE tmpfs:
+<volume user="*" 
+fstype="tmpfs" 
+mountpoint="~/tmp"
+options="size=100M,mode=0700"/>
 
-
-
-
-	vim /etc/pam.d/common-session
-	
-	session	[default=1]	pam_permit.so
-	session	requisite	pam_deny.so
-	session	required	pam_permit.so
-	session	required	pam_unix.so 
-	session	optional	pam_mount.so 
-
+	vim /etc/pam.d/login 
 
 
 ● Només a l’usuari unix01 es munta dins el seu home un recurs anomenat tmp de
-200M corresponent a un ramdisk tmpfs.
+200M corresponent a un ramdisk tmpfs
+
+
+	vim /etc/security/pam_mount.conf.xml
+
+#EXEMPLE tmpfs:
+<volume user="unix01" fstype="tmpfs" mountpoint="~/tmp"
+options="size=200M,mode=0700" />
+
+
 
 ● A l’usuari unix02 se li munta dins el home un recurs NFS de xarxa.
 *Nota* Creeu un recurs de xarxa NFS per exemple /usr/share/docs exportat per
 NFS.
 
+Afegir nfs-common al Dockerfile !!!!  service nfs-server start 
+El nfs s'ha d'instalar i executar al nostre host !!! systemctl start nfs-utils
 
+
+
+	vim /etc/exports, afegim:
+
+ 	/usr/share/doc *(ro,sync)
+
+	mount -t nfs4 localhost:/usr/share/doc
+
+	vim /etc/security/pam_mount.conf.xml
+
+	<volume 
+	user="unix02" 
+	fstype="nfs4"
+	server="172.19.0.1"  
+	path="/usr/share/doc" 
+	mountpoint="~/mydoc"/>
 
 ---------------------------------------------------------------------------------------
 
