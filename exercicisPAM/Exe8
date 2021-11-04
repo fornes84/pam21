@@ -18,18 +18,18 @@ Necessitem instal·lar els paquets:
 ● A tots els usuaris es munta dins el seu home un recurs anomenat tmp de 100M
 corresponent a un ramdisk tmpfs.
 
-
-
 	vim /etc/security/pam_mount.conf.xml
+	dins del tag <pam_mount>
 
-#EXEMPLE tmpfs:
-<volume user="*" 
-fstype="tmpfs" 
-mountpoint="~/tmp"
-options="size=100M,mode=0700"/>
+	#EXEMPLE tmpfs:
+	<volume user="*" 
+	fstype="tmpfs" 
+	mountpoint="~/tmp"
+	options="size=100M,mode=0700"/>
 
-	vim /etc/pam.d/login 
-
+	dins de /etc/pam.d/common_auth i /etc/pam.d/common_session  ja s'ha insetat automaticament el modul de pam_mount.so
+	al instalar els paquets especificats en el Dockerfile
+	 
 
 ● Només a l’usuari unix01 es munta dins el seu home un recurs anomenat tmp de
 200M corresponent a un ramdisk tmpfs
@@ -48,15 +48,13 @@ options="size=200M,mode=0700" />
 NFS.
 
 Afegir nfs-common al Dockerfile !!!!  service nfs-server start 
-El nfs s'ha d'instalar i executar al nostre host !!! systemctl start nfs-utils
-
+El nfs s'ha d'instalar i executar al nostre host !!! 
+systemctl start nfs-utils
 
 
 	vim /etc/exports, afegim:
 
  	/usr/share/doc *(ro,sync)
-
-	mount -t nfs4 localhost:/usr/share/doc
 
 	vim /etc/security/pam_mount.conf.xml
 
@@ -73,10 +71,13 @@ El nfs s'ha d'instalar i executar al nostre host !!! systemctl start nfs-utils
 
 /etc/security/pam_mount.conf.xml
 
-tmpfs:
-<volume user="test" fstype="tmpfs" mountpoint="/home/test"
-options="size=10M,uid=%(USER),mode=0700" />
-
 # Montam un volum de 10 MB, propietat del usuari (mode)
+
+#tmpfs:
+
+<volume user="unix03" fstype="tmpfs" mountpoint="~/test"
+options="size=10M,uid=%(USER),mode=0700"/>
+
+??????????????????????????????????????'
 
 
