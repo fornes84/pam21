@@ -8,11 +8,6 @@ Configura el container PAM (--privileged) per:
 ● Permetre l’autenticació local dels usuaris unix locals (unix01, unix02 i unix03)
 ● Permetre l’autenticació d’usuaris de LDAP.
 
-
-
-
-
-
 Per fer-ho s’utilitzarà la imatge ldap21/grup que conté el llistat final d’usuaris i grups
 LDAP amb els que treballar.
 
