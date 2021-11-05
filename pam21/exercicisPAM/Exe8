@@ -1,0 +1,97 @@
+08 PAM Pràctica: pam_mount.so
+
+Pràctica del mòdul pam_mount.so
+● Consulta el HowTo-PAM l’apartat “7 Exemples PAM: usant el servei session”
+● Consulta el man de pam_mkhomedir.so
+● Consulta el man de pam_mount.so
+● Consulta el man de /etc/security/pam_mount.conf.xml
+
+Configura el container PAM (--privileged) per provar cada un dels casos següents:
+
+	docker run --rm --name pam.edt.org --privileged --network 2hisix -it balenabalena/pam21:base 
+
+Necessitem instal·lar els paquets:
+
+	libpam-pwquality
+	libpam-mount
+
+● A tots els usuaris es munta dins el seu home un recurs anomenat tmp de 100M
+corresponent a un ramdisk tmpfs.
+
+	vim /etc/security/pam_mount.conf.xml
+	dins del tag <pam_mount>
+
+	#EXEMPLE tmpfs:
+	<volume user="*" 
+	fstype="tmpfs" 
+	mountpoint="~/tmp"
+	options="size=100M,mode=0700"/>
+
+	dins de /etc/pam.d/common_auth i /etc/pam.d/common_session  ja s'ha insetat automaticament el modul de pam_mount.so al instalar els paquets especificats en el Dockerfile
+	 
+
+● Només a l’usuari unix01 es munta dins el seu home un recurs anomenat tmp de
+200M corresponent a un ramdisk tmpfs
+
+
+	vim /etc/security/pam_mount.conf.xml
+
+#EXEMPLE tmpfs:
+<volume user="unix01" fstype="tmpfs" mountpoint="~/tmp"
+options="size=200M,mode=0700" />
+
+
+
+● A l’usuari unix02 se li munta dins el home un recurs NFS de xarxa.
+*Nota* Creeu un recurs de xarxa NFS per exemple /usr/share/docs exportat per
+NFS.
+
+Afegir nfs-common al Dockerfile !!!!  
+
+HOST
+
+El nfs s'ha d'instalar i executar al nostre host !!! 
+apt install nfs-server
+systemctl nfs-server-start
+
+	vim /etc/exports, afegim:
+
+ 	/usr/share/doc *(ro,sync)
+
+DOCKER
+
+service nfs-common start (si no va, fer: service rpcbind restart)
+
+	vim /etc/security/pam_mount.conf.xml
+
+	<volume 
+	user="unix02" 
+	fstype="nfs4"
+	server="172.19.0.1"  
+	path="/usr/share/doc" 
+	mountpoint="~/mydoc"/>
+
+
+en el docker 
+
+service rpcbind restart
+service nfs-common start
+
+su unix02
+df
+---------------------------------------------------------------------------------------
+
+# UTILITZAR pam_mount
+
+/etc/security/pam_mount.conf.xml
+
+# Montam un volum de 10 MB, propietat del usuari (mode)
+
+#tmpfs:
+
+<volume user="unix03" fstype="tmpfs" mountpoint="~/test"
+options="size=10M,uid=%(USER),mode=0700"/>
+
+??????????????????????????????????????'
+
+

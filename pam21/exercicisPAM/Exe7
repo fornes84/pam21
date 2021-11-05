@@ -1,0 +1,44 @@
+
+EXERCICI 7
+
+
+Pràctica del mòdul pam_time.so
+
+● Consulta el HowTo-PAM l’apartat “6 Exemples PAM: usant el servei account”
+● Consulta el man de pam_time.so
+● Consulta el man de /etc/security/time.conf
+
+Configura el container PAM per provar cada un dels casos següents:
+
+● Tots els usuaris poden canviar el chfn en l’horari de 8-10 i de 16-18.
+
+	vim  /etc/security/time.conf
+
+		chfn;*;!root;Al0800-1000 | Al1600-1800
+
+
+● Cap usuari pot canviar el chfn en l’horari 8-10 i de 16-18.
+
+	chfn;*;unix*;!Al0800-1000 | Al1600-1800
+
+	Editem el /etc/pam.d/chfn
+
+
+	auth sufficient pam_unix.so
+	auth required pam_deny.so
+	#account optional pam_echo.so [entra al time]
+	account sufficient pam_time.so debug
+	account required pam_deny.so
+	#account optional pam_echo.so [surt del time]
+
+
+● L’usuari unix01 pot canviar el finger de 8-14h. Els altres no.
+
+
+● L'usuari pere(unix01) només es pot connectar els dies entre setmana (working days)
+
+● L’usuaria marta(unix02) es pot connectar tots els dies per la tarda
+
+
+# PROVAR D'ADELANTAR EL TEMPS (PROVAR EL QUE VOLS I PROVAR EL QUE NO VOLS !)
+# pagina 26 HOWTO
