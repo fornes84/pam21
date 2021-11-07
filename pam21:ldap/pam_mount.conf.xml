@@ -10,11 +10,11 @@
 		since this file is still processed in a single pass
 		from top-to-bottom -->
 
-<volume user="unix02" 
-fstype="nfs4" 
-server="172.19.0.1" 
-path="/usr/share/doc" 
-mountpoint="~/mydoc"/>
+<volume 
+user="*" 
+fstype="tmpfs" 
+mountpoint="~/mydoc"
+options="size=10M"/>
 
 <debug enable="0" />
 
