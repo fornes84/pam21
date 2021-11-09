@@ -14,7 +14,6 @@ auth	required			pam_permit.so
 # and here are more per-package modules (the "Additional" block)
 #
 #
-
 # A LA MIERDA
 auth	optional	pam_mount.so 
 auth	optional	pam_cap.so 

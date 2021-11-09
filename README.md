@@ -18,7 +18,7 @@ ls /usr/lib64/security/ <-- ON SON ELS MODULS.so
 Juntar LDAP + authentificació d'usuaris amb PAM
 (configurem les regles PAM per permetre tant usuaris unix com usuaris LDAP)
 	
-nsswitch.conf -->  Especifica d'on obtenir info sobre una categoria i quina font(columna) te + prioritat (en el nostre cas usuaris i grups a buscar a /etc/XX i ldap)
+nsswitch.conf -->  Especifica d'on obtenir info sobre una categoria i quina font(columna) te + prioritat (en el nostre cas usuaris i grups a buscar a /etc/XX i sino ldap)
 
 fonts:
 
@@ -27,20 +27,23 @@ fonts:
   files   Busca a /etc/ qualsevol nom de categoria (ex: passwd,shadow)
 
 /etc/nslcd.conf	--> especifica al PAM on es el LDAP i la base de dades del LDAP
+/etc/nscd.conf --> Manté la inform LDAP per manteir la connexió viva
 
 llibreries noves del docker: 
 libnss-ldapd --> Permet utiltizar SLL o TLS i garanteix la integritat de la transf de dades 
 libpam-ldapd --> Permet utilitzar SSL o TLS per passar amb seguretat els passwords
 nslcd 
-nslcd-utils  -->
+nslcd-utils  --> ???
 ldap-utils --> per poder utilitzar comandes client LDAP
 ---------
-serveis:
 
-nscd --> Opcional: Per reduir el trafic LDAP
-nslcd -->
+COMPROBAR SI FUNCIONA EL LINK A LDAP?
 
-COMPROBAR SI FUNCIONA EL LINK ?
+Validació-1 Acceś al IP en aquest punt el host PAM està configurat per accedir a la informació LDAP de
+manera que les ordres getent han de funcionar i serveixen de mecanisme de validació de si tot està correctament
+configurat o no.
+
+
  getent passwd
  getent group
 
