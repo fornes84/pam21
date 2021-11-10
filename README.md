@@ -12,6 +12,9 @@ ls /usr/lib64/security/ <-- ON SON ELS MODULS.so
 			i montar-los al home de l'usuar (pam_mount.conf.xml) quan es loggeja
 			(llibreries noves del docker: libpam-pwquality, libpam-mount, nfs-common)	
 
+  
+  pract_INCLUDE_SUBSTACK: 
+  Exercici d'exemple on modifiquem el stack de chfn (dins d'un docker) per provar les diferencies entre include i substack
 
 
   PAM21:LDAP: 

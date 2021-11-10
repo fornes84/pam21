@@ -1,0 +1,18 @@
+# dins d'un docker substitur el stack de dins dels fitxer include/substac per el contingut del fitxer /etc/pam.d/chfn
+
+auth optional pam_echo.so [fitxer exemple.pam]
+auth required pam_unix.so
+auth [success=3 default=ignore] pam_succeed_if.so uid eq 1000
+auth required pam_echo.so [soc pesat ho se, pero algo no ha anat be] 
+auth required pam_echo.so [sortim del fitxer...]
+auth requisite pam_deny.so
+auth sufficient  pam_permit.so
+
+
+# Escrivim un echo
+# Obliguem a fer autentificació user/password UNIX
+# Si ha anat bé salta 3 lineas (ves a la 4ta) sempre i quan uid==1000, sino segueix
+# Escriu echo
+# Escriue echo
+# Denega i surt
+# LINEA 4: surt amb un OK

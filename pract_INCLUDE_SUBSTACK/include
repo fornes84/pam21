@@ -1,0 +1,6 @@
+#%PAM-1.0
+
+auth       optional        pam_echo.so [benvingut al fitxer include, ara cridarem al fitxer exemple]
+auth       include         exemple.pam
+auth       required        pam_deny.so
+

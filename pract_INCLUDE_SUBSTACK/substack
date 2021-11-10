@@ -1,0 +1,5 @@
+auth       optional        pam_echo.so [benvingut al fitxer substack, ara cridarem al fitxer exemple]
+auth       substack        exemple.pam
+auth       optional        pam_echo.so [aquest missatge es veura independentment, falli o no]
+auth       required        pam_deny.so
+
