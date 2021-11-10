@@ -1,4 +1,5 @@
-# dins d'un docker substitur el stack de dins dels fitxer include/substac per el contingut del fitxer /etc/pam.d/chfn
+# dins d'un docker substitur el stack de dins dels fitxer include/substac per el contingut del fitxer /etc/pam.d/chfn i aquest ha d'anar dins de
+# /etc/pam.d/ (utilitzar docker cp origin docker: destin
 
 auth optional pam_echo.so [fitxer exemple.pam]
 auth required pam_unix.so
@@ -7,7 +8,6 @@ auth required pam_echo.so [soc pesat ho se, pero algo no ha anat be]
 auth required pam_echo.so [sortim del fitxer...]
 auth requisite pam_deny.so
 auth sufficient  pam_permit.so
-
 
 # Escrivim un echo
 # Obliguem a fer autentificació user/password UNIX
