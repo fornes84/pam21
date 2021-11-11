@@ -1,0 +1,6 @@
+#%PAM-1
+#-*- coding: utf-8-*-
+
+auth       sufficient   pam_python.so /opt/docker/pam_mates.py
+account    optional     pam_python.so /opt/docker/pam_permit.py    
+auth	   required     pam_python.so /opt/docker/pam_deny.py

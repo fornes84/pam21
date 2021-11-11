@@ -50,3 +50,30 @@ configurat o no.
  getent passwd
  getent group
 
+
+
+pam21:python
+
+PRACT 11
+Es tracta de crear un programa simple de python, pamaware.py, que utilitzi pam per autentificar un usuaris sigui UNIX o de LDAP. La gràcia es instal·lar python i les llibreries (libpam-python) i veure també com pip install python-pam ja fica la llibreria pq pyton la pugui utilitzar.
+
+	python3 pamaware.py
+
+PRACT 12
+
+Crear un .so per tal de crear un módul PAM fet amb moduls PAM i opcions de python pugui validar que és un humà qui crida el programa (pam_mates.py) validant el resultat 3x2
+Recordar que per provar-ho sobreescrivim el stack PAM de l'eina chfn !! 
+
+Contingut chfn:
+
+	#%PAM-1
+	#-*- coding: utf-8-*-
+
+	auth       sufficient   pam_python.so /opt/docker/pam_mates.py
+	account    optional     pam_python.so /opt/docker/pam_permit.py    
+	auth	   required     pam_python.so /opt/docker/pam_deny.py
+
+## Les rutes son opcions del pam_python.so (o sigui com a argument li passem un programa/modul python) (imiten els moduls .so de PAM)
+# un suficient del auth (resposta correcta 3x2) fara que ja poguem fer el chfn
+# si el auth falla anira al account i ??? i seguirà a la linea d'aball
+# i finalment negará l'acceś amb pam_deny
