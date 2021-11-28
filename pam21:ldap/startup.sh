@@ -28,12 +28,11 @@ cp /opt/docker/common-account /etc/pam.d/common-account
 
 cp /opt/docker/pam_mount.conf.xml /etc/security/pam_mount.conf.xml
 # que s'ha de montar a cada inici de sessio d'un usuari
-
+cp /opt/docker/known_hosts /root/.ssh/known_hosts
 # iniciem els serveis
 
 /usr/sbin/nscd
 /usr/sbin/nslcd
-#AQUEST NO XUTA 
 
 /bin/bash
 

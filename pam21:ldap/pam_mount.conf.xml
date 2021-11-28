@@ -10,18 +10,52 @@
 		since this file is still processed in a single pass
 		from top-to-bottom -->
 
-<volume 
-user="*" 
-fstype="tmpfs" 
-mountpoint="~/mydoc"
-options="size=10M"/>
-
 <debug enable="0" />
+    <!-- Volume definitions -->
 
-		<!-- Volume definitions -->
+  <!-- muntar ~/mytmp amb un ramdisk de 100M -->
+    <volume
+       user="*"
+       fstype="tmpfs"
+       mountpoint="~/mytmp"
+       options="size=100M" 
+    />
+
+<!-- muntar a ~/man el recurs NFS 172.18.0.1:/usr/share/doc 
+     <volume
+         user="*"
+	 fstype="nfs"
+	 server="172.18.0.1"
+         path="/usr/share/man"
+         mountpoint="~/man"
+	/>
+	-->
+
+<!-- muntar només per  a unix02 ~/unix02/mydoc  NFS 172.18.0.1:/usr/share/doc
+     <volume
+         user="unix02"
+         fstype="nfs"
+         server="172.18.0.1"
+         path="/usr/share/doc"
+         mountpoint="~/%(USER)/mydoc"
+     />
+-->
+
+<volume
+      user="*"
+      fstype="fuse"
+      path="sshfs#%(USER)@172.19.0.3:/home/%(USER)"
+      mountpoint="~/%(USER)"
+      options="nosuid,nodev,noatime,reconnect,allow_other,default_permissions,password_stdin"
+      ssh="0" noroot="0" 
+    />
 
 
-		<!-- pam_mount parameters: General tunables -->
+<!--
+<fusemount>mount.fuse3 %(VOLUME) %(MNTPT) -o %(OPTIONS)</fusemount>
+
+-->
+	     <!-- pam_mount parameters: General tunables -->
 
 <!--
 <luserconf name=".pam_mount.conf.xml" />
@@ -45,6 +79,4 @@ options="size=10M"/>
 		<!-- pam_mount parameters: Volume-related -->
 
 <mkmountpoint enable="1" remove="true" />
-
-
 </pam_mount>
