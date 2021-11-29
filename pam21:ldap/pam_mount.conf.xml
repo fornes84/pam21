@@ -41,6 +41,7 @@
      />
 -->
 
+     <!-- PER A LDAP i UNIX:  path="sshfs#(USER)@172.19.0.3:./. -->	     
 <volume
       user="*"
       fstype="fuse"
