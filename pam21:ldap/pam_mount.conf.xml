@@ -11,52 +11,11 @@
 		from top-to-bottom -->
 
 <debug enable="0" />
-    <!-- Volume definitions -->
 
-  <!-- muntar ~/mytmp amb un ramdisk de 100M -->
-    <volume
-       user="*"
-       fstype="tmpfs"
-       mountpoint="~/mytmp"
-       options="size=100M" 
-    />
+		<!-- Volume definitions -->
 
-<!-- muntar a ~/man el recurs NFS 172.18.0.1:/usr/share/doc 
-     <volume
-         user="*"
-	 fstype="nfs"
-	 server="172.18.0.1"
-         path="/usr/share/man"
-         mountpoint="~/man"
-	/>
-	-->
-
-<!-- muntar només per  a unix02 ~/unix02/mydoc  NFS 172.18.0.1:/usr/share/doc
-     <volume
-         user="unix02"
-         fstype="nfs"
-         server="172.18.0.1"
-         path="/usr/share/doc"
-         mountpoint="~/%(USER)/mydoc"
-     />
--->
-
-     <!-- PER A LDAP i UNIX:  path="sshfs#(USER)@172.19.0.3:./. -->	     
-<volume
-      user="*"
-      fstype="fuse"
-      path="sshfs#%(USER)@172.19.0.3:/home/%(USER)"
-      mountpoint="~/%(USER)"
-      options="nosuid,nodev,noatime,reconnect,allow_other,default_permissions,password_stdin"
-      ssh="0" noroot="0" 
-    />
-
-
-<!--
-<fusemount>mount.fuse3 %(VOLUME) %(MNTPT) -o %(OPTIONS)</fusemount>
-
--->
-	     <!-- pam_mount parameters: General tunables -->
+<volume user="*" fstype="cifs" server="172.19.0.2" path="%(USER)"  mountpoint="~/%(USER)" />
+		<!-- pam_mount parameters: General tunables -->
 
 <!--
 <luserconf name=".pam_mount.conf.xml" />
@@ -80,4 +39,6 @@
 		<!-- pam_mount parameters: Volume-related -->
 
 <mkmountpoint enable="1" remove="true" />
+
+
 </pam_mount>
